@@ -555,17 +555,32 @@ class FormAnimationSystem {
         const projectTypeDisplay = projectType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
         
         // Create WhatsApp message
-        const whatsappMessage = `🌐 *New Project Inquiry*\n\n📝 *Name:* ${name}\n📧 *Email:* ${email}\n🌍 *Country:* ${country}\n� *Phone:* ${phone}\n🎯 *Project Type:* ${projectTypeDisplay}\n💬 *Message:* ${message || 'No additional details'}\n\n📱 Sent from Internetify.io Website\n\n🔗 Contact: +91 9940982795`;
+        const whatsappMessage = `🌐 *New Project Inquiry*\n\n📝 *Name:* ${name}\n📧 *Email:* ${email}\n🌍 *Country:* ${country}\n📱 *Phone:* ${phone}\n🎯 *Project Type:* ${projectTypeDisplay}\n💬 *Message:* ${message || 'No additional details'}\n\n📱 Sent from Internetify.io Website\n\n🔗 Contact: +91 9940982795`;
         
         // Show notification
         this.showNotification('Opening WhatsApp with your details...', 'success');
         
+        // Mobile-friendly WhatsApp integration
+        const whatsappUrl = this.isMobile() 
+            ? `https://api.whatsapp.com/send?phone=919940982795&text=${encodeURIComponent(whatsappMessage)}`
+            : `https://wa.me/919940982795?text=${encodeURIComponent(whatsappMessage)}`;
+        
         // Open WhatsApp
         setTimeout(() => {
-            window.open(`https://wa.me/919940982795?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+            if (this.isMobile()) {
+                // For mobile, try to open WhatsApp app first
+                window.location.href = whatsappUrl;
+            } else {
+                // For desktop, open in new tab
+                window.open(whatsappUrl, '_blank');
+            }
             this.submitBtn.classList.remove('submitting');
             this.form.reset();
         }, 1500);
+    }
+    
+    isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
     
     isValidEmail(email) {
