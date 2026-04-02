@@ -168,14 +168,36 @@ class NavigationSystem {
             });
         });
         
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                this.navbar.classList.add('scrolled');
-            } else {
-                this.navbar.classList.remove('scrolled');
-            }
-        });
+        // Initialize mobile menu
+        this.initMobileMenu();
+    }
+    
+    initMobileMenu() {
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close menu when clicking on nav items
+            this.navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    mobileMenuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            });
+        }
     }
     
     scrollToSection(section) {
