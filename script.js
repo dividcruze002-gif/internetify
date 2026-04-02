@@ -192,6 +192,116 @@ class NavigationSystem {
 // Initialize navigation
 new NavigationSystem();
 
+// Enhanced Hero Animation System
+class HeroAnimationSystem {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        // Animate subtitle words
+        this.animateSubtitleWords();
+        
+        // Animate hero description
+        this.animateHeroDescription();
+        
+        // Add floating particles to CTA button
+        this.addCTAParticles();
+        
+        // Animate floating shapes
+        this.animateFloatingShapes();
+    }
+    
+    animateSubtitleWords() {
+        const words = document.querySelectorAll('.subtitle-word');
+        words.forEach((word, index) => {
+            setTimeout(() => {
+                word.style.opacity = '1';
+                word.style.transform = 'translateY(0)';
+            }, 200 * (index + 1));
+        });
+    }
+    
+    animateHeroDescription() {
+        const description = document.querySelector('.hero-description');
+        setTimeout(() => {
+            description.style.opacity = '1';
+            description.style.transform = 'translateY(0)';
+        }, 1500);
+    }
+    
+    addCTAParticles() {
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+            ctaButton.addEventListener('mouseenter', () => {
+                this.createParticles(ctaButton);
+            });
+        }
+    }
+    
+    createParticles(button) {
+        const particles = button.querySelector('.cta-particles');
+        if (!particles) return;
+        
+        // Clear existing particles
+        particles.innerHTML = '';
+        
+        // Create new particles
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'cta-particle';
+            particle.style.cssText = `
+                position: absolute;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent-primary);
+                border-radius: 50%;
+                top: ${Math.random() * 100}%;
+                left: ${Math.random() * 100}%;
+                opacity: 0;
+                animation: particle-float ${Math.random() * 2 + 1}s ease-out forwards;
+            `;
+            particles.appendChild(particle);
+        }
+        
+        // Add particle styles
+        if (!document.querySelector('#cta-particle-styles')) {
+            const style = document.createElement('style');
+            style.id = 'cta-particle-styles';
+            style.textContent = `
+                @keyframes particle-float {
+                    0% { opacity: 0; transform: translate(0, 0) scale(0); }
+                    50% { opacity: 1; transform: translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) scale(1); }
+                    100% { opacity: 0; transform: translate(${Math.random() * 60 - 30}px, ${Math.random() * 60 - 30}px) scale(0); }
+                }
+                .cta-particle {
+                    pointer-events: none;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+    
+    animateFloatingShapes() {
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            // Add interactive hover effect
+            shape.addEventListener('mouseenter', () => {
+                shape.style.transform = 'scale(1.2)';
+                shape.style.opacity = '0.3';
+            });
+            
+            shape.addEventListener('mouseleave', () => {
+                shape.style.transform = 'scale(1)';
+                shape.style.opacity = '0.1';
+            });
+        });
+    }
+}
+
+// Initialize enhanced hero animations
+new HeroAnimationSystem();
+
 // Hero CTA Button
 const heroCTA = document.getElementById('heroCTA');
 if (heroCTA) {
