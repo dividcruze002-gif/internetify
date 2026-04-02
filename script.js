@@ -8,65 +8,6 @@ window.addEventListener('load', () => {
     }, 2000);
 });
 
-// Custom Cursor System
-const cursor = document.getElementById('cursor');
-const cursorGlow = document.getElementById('cursorGlow');
-let mouseX = 0;
-let mouseY = 0;
-let currentX = 0;
-let currentY = 0;
-
-// Enhanced cursor tracking
-function updateCursor(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    // Update cursor position
-    cursor.style.left = mouseX - 4 + 'px';
-    cursor.style.top = mouseY - 4 + 'px';
-    
-    // Update glow position with smooth following
-    cursorGlow.classList.add('active');
-}
-
-// Smooth cursor glow animation
-function animateGlow() {
-    currentX += (mouseX - currentX) * 0.1;
-    currentY += (mouseY - currentY) * 0.1;
-    
-    cursorGlow.style.left = currentX - 200 + 'px';
-    cursorGlow.style.top = currentY - 200 + 'px';
-    
-    requestAnimationFrame(animateGlow);
-}
-
-// Cursor hover effects
-function addCursorEffects() {
-    const interactiveElements = document.querySelectorAll('button, a, .service-card, .word-item, input, textarea');
-    
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'scale(2)';
-            cursor.style.background = 'var(--accent-secondary)';
-        });
-        
-        element.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'scale(1)';
-            cursor.style.background = 'var(--accent-primary)';
-        });
-    });
-}
-
-// Initialize cursor
-if (cursor && cursorGlow) {
-    document.addEventListener('mousemove', updateCursor);
-    document.addEventListener('mouseleave', () => {
-        cursorGlow.classList.remove('active');
-    });
-    animateGlow();
-    addCursorEffects();
-}
-
 // Particle System for Hero Background
 class ParticleSystem {
     constructor(canvas) {
@@ -167,37 +108,6 @@ class NavigationSystem {
                 }
             });
         });
-        
-        // Initialize mobile menu
-        this.initMobileMenu();
-    }
-    
-    initMobileMenu() {
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        if (mobileMenuToggle && navMenu) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuToggle.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            
-            // Close menu when clicking on nav items
-            this.navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    mobileMenuToggle.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!mobileMenuToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                    mobileMenuToggle.classList.remove('active');
-                    navMenu.classList.remove('active');
-                }
-            });
-        }
     }
     
     scrollToSection(section) {
