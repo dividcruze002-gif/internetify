@@ -141,7 +141,7 @@ body {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Mobile Navigation */
+/* Mobile Footer - Full Width & Proper Display */
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;
@@ -288,30 +288,32 @@ body {
         border-radius: 8px;
     }
     
-    /* Footer Mobile - Full Width & Proper Spacing */
+    /* Footer Mobile - Complete Fix */
     .main-footer {
         margin-top: auto;
         width: 100%;
         overflow: visible;
         position: relative;
-        padding-bottom: 100px; /* Space for WhatsApp button */
+        padding: 4rem 0 120px; /* Top, sides, bottom for WhatsApp */
+        background: var(--bg-secondary);
+        min-height: 400px; /* Ensure minimum height */
     }
     
     .footer-container {
         padding: 0 1rem;
         width: 100%;
+        max-width: 100%;
         overflow: visible;
     }
     
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-        padding: 2rem 0;
-        width: 100%;
-        overflow: visible;
         display: flex;
         flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+        padding: 0;
+        width: 100%;
+        overflow: visible;
         align-items: center;
     }
     
@@ -338,7 +340,7 @@ body {
         display: flex;
         justify-content: center;
         gap: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         flex-wrap: wrap;
     }
     
@@ -378,7 +380,7 @@ body {
         padding: 1.5rem;
         margin-bottom: 1rem;
         width: 100%;
-        max-width: 300px;
+        max-width: 100%;
         overflow: visible;
     }
     
@@ -425,6 +427,7 @@ body {
     }
     
     .footer-bottom {
+        display: flex;
         flex-direction: column;
         gap: 1.5rem;
         text-align: center;
