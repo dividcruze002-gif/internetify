@@ -560,20 +560,12 @@ class FormAnimationSystem {
         // Show notification
         this.showNotification('Opening WhatsApp with your details...', 'success');
         
-        // Mobile-friendly WhatsApp integration
-        const whatsappUrl = this.isMobile() 
-            ? `https://api.whatsapp.com/send?phone=919940982795&text=${encodeURIComponent(whatsappMessage)}`
-            : `https://wa.me/919940982795?text=${encodeURIComponent(whatsappMessage)}`;
+        // Universal WhatsApp URL (works on all devices)
+        const whatsappUrl = `https://wa.me/919940982795?text=${encodeURIComponent(whatsappMessage)}`;
         
         // Open WhatsApp
         setTimeout(() => {
-            if (this.isMobile()) {
-                // For mobile, try to open WhatsApp app first
-                window.location.href = whatsappUrl;
-            } else {
-                // For desktop, open in new tab
-                window.open(whatsappUrl, '_blank');
-            }
+            window.open(whatsappUrl, '_blank');
             this.submitBtn.classList.remove('submitting');
             this.form.reset();
         }, 1500);
